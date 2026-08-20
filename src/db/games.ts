@@ -1,5 +1,5 @@
 import {db} from "./database.ts";
-import type {Player} from "../game/types.ts";
+import type {Game, Player} from "../game/types.ts";
 
 export async function createGame(players: string[]) {
     if (players.length !== 4) {
@@ -13,4 +13,8 @@ export async function createGame(players: string[]) {
         players: players.map((player: string): Player => { return { id: crypto.randomUUID(), name: player } }),
         rounds: [],
     })
+}
+
+export async function getCurrentGame(): Promise<Game | undefined> {
+    return db.games.filter(game => !game.finished).first();
 }

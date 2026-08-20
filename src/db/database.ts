@@ -6,7 +6,7 @@ const db = new Dexie("gameDatabase") as Dexie & {
 };
 
 db.version(1).stores({
-    games: "++id, createdAt"
+    games: "++id, createdAt, finished"
 });
 
 export { db }
