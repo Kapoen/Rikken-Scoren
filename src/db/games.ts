@@ -1,10 +1,5 @@
 import {db} from "./database.ts";
-import type {Game, Player} from "../game/types.ts";
-import {useLiveQuery} from "dexie-react-hooks";
-
-export function getGames(): Game[] | undefined {
-    return useLiveQuery(() => db.games.orderBy("createdAt").reverse().toArray());
-}
+import type {Player} from "../game/types.ts";
 
 export async function createGame(players: string[]) {
     if (players.length !== 4) {

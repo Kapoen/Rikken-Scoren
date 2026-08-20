@@ -4,7 +4,7 @@ import HomePage from "./pages/HomePage.tsx";
 
 function App() {
   return (
-      <BrowserRouter>
+      <BrowserRouter basename="/rikken-scoren">
           <Routes>
               <Route path="/" element={<HomePage />} />
           </Routes>

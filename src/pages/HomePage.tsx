@@ -1,8 +1,9 @@
-import {createGame, getGames} from "../db/games.ts";
+import {createGame} from "../db/games.ts";
 import type {ReactElement} from "react";
+import {useGames} from "../hooks/useGames.ts";
 
 export default function HomePage(): ReactElement {
-    const games= getGames();
+    const games= useGames();
 
     return (
         <main>
