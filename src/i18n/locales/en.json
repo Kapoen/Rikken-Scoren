@@ -1,7 +1,11 @@
 {
     "menu": {
       "newGame": "New game",
+      "startGame": "Start game",
       "continue": "Continue game",
-      "gameHistory": "Played games"
+      "gameHistory": "Played games",
+      "player": "Player",
+      "enterPlayerNames": "Enter player names",
+      "back": "Back"
     }
 }

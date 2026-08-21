@@ -1,7 +1,11 @@
 {
   "menu": {
     "newGame": "Nieuw spel",
+    "startGame": "Start spel",
     "continue": "Verder spelen",
-    "gameHistory": "Gespeelde spellen"
+    "gameHistory": "Gespeelde spellen",
+    "player": "Speler",
+    "enterPlayerNames": "Voer speler namen in",
+    "back": "Terug"
   }
 }
