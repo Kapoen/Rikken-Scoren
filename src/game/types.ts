@@ -5,7 +5,10 @@ export type Player = {
 
 export type Round = {
     id: string;
+    gameId: string;
+    number: number;
     type: string;
+    scores: Record<string, number>;
 }
 
 export type Game = {
@@ -13,5 +16,4 @@ export type Game = {
     createdAt: number;
     finished: boolean;
     players: Player[];
-    rounds: Round[];
 }

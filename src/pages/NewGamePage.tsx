@@ -25,6 +25,7 @@ export default function NewGamePage(): ReactElement {
             setError(err.message);
             return;
         }
+
         navigate("/playGame");
     }
 

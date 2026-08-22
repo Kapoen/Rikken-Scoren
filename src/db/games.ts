@@ -23,7 +23,6 @@ export async function createGame(players: string[]) {
         createdAt: Date.now(),
         finished: false,
         players: players.map((player: string): Player => { return { id: crypto.randomUUID(), name: player } }),
-        rounds: [],
     });
 }
 

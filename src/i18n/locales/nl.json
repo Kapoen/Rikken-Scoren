@@ -6,6 +6,11 @@
     "gameHistory": "Gespeelde spellen",
     "player": "Speler",
     "enterPlayerNames": "Voer speler namen in",
-    "back": "Terug"
+    "back": "Terug",
+    "currentScores": "Huidige scores"
+  },
+  "game": {
+    "rounds": "Rondes",
+    "showGraph": "Toon grafiek"
   }
 }
