@@ -1,16 +1,27 @@
-import {type ReactElement, useEffect, useState} from "react";
+import {type ChangeEvent, type ReactElement, useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import type {Game, Player, Round} from "../game/types.ts";
 import {getCurrentGame} from "../db/games.ts";
 import {Navigate} from "react-router";
 import {useRounds} from "../hooks/useRounds.ts";
-import {addRound} from "../db/rounds.ts";
+import {ROUND_TYPES, type RoundType} from "../game/roundTypes.ts";
 
 export default function PlayGamePage(): ReactElement {
     const { t } = useTranslation();
 
     const [currentGame, setCurrentGame] = useState<Game | undefined | null>(null);
+    const [selectRoundType, setSelectedRoundType] = useState<RoundType | null>(null);
     const rounds: Round[] | undefined = useRounds(currentGame?.id);
+
+    const onSelect = (event: ChangeEvent<HTMLSelectElement>) => {
+        const value = event.target.value;
+
+        if (value === "selectRoundType") {
+            setSelectedRoundType(null);
+        } else {
+            setSelectedRoundType(value as RoundType);
+        }
+    }
 
     useEffect(() => {
         async function fetchCurrentGame() {
@@ -71,9 +82,19 @@ export default function PlayGamePage(): ReactElement {
                     )
                 }
 
-                <div className="w-full">
-                    <span>
-                        <button className="border rounded-lg bg-blue-400" onClick={() => addRound(currentGame.id)}>ADD TEST ROUND</button>
+                <div className="flex flex-col w-full items-center justify-center">
+                    <span className="flex flex-row w-full gap-2 items-center justify-center">
+                        <b className="min-w-fit">{t("game.addRound")}</b>
+                        <select className="w-full border rounded-lg p-2" onChange={onSelect}>
+                            <option value="selectRoundType">{t("game.selectGametype")}</option>
+                            {
+                                (Object.keys(ROUND_TYPES) as RoundType[]).map((roundType) => (
+                                    <option key={roundType} value={roundType}>
+                                        {t(`roundTypes.${roundType}`)}
+                                    </option>
+                                ))
+                            }
+                        </select>
                     </span>
                 </div>
             </div>

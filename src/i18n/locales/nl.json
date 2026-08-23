@@ -11,6 +11,26 @@
   },
   "game": {
     "rounds": "Rondes",
-    "showGraph": "Toon grafiek"
+    "showGraph": "Toon grafiek",
+    "addRound": "Ronde toevoegen",
+    "selectGametype": "Kies speltype"
+  },
+  "roundTypes": {
+    "troela": "Troela",
+    "rik": "Rik",
+    "eightSolo": "Acht alleen",
+    "piek": "Piek",
+    "nineSolo": "Negen alleen",
+    "misere": "Misère",
+    "tenSolo": "Tien alleen",
+    "openPiek": "Open piek",
+    "elevenSolo": "Elf alleen",
+    "openMisere": "Open misère",
+    "twelveSolo": "Twaalf alleen",
+    "openPiekTalking": "Open piek met een praatje",
+    "openMisereTalking": "Open misère met een praatje",
+    "thirteenSolo": "Dertien alleen",
+    "spadeQueen": "Schoppen mie",
+    "oneOrFive": "Één of vijf"
   }
 }

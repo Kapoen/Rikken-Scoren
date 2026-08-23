@@ -11,6 +11,26 @@
   },
   "game": {
     "rounds": "Rounds",
-    "showGraph": "Show graph"
+    "showGraph": "Show graph",
+    "addRound": "Add round",
+    "selectGametype": "Select gametype"
+  },
+  "roundTypes": {
+    "troela": "Troela",
+    "rik": "Rik",
+    "eightSolo": "Eight solo",
+    "piek": "Piek",
+    "nineSolo": "Nine solo",
+    "misere": "Misère",
+    "tenSolo": "Ten solo",
+    "openPiek": "Open piek",
+    "elevenSolo": "Eleven solo",
+    "openMisere": "Open misère",
+    "twelveSolo": "Twelve solo",
+    "openPiekTalking": "Open piek with talking",
+    "openMisereTalking": "Open misère with talking",
+    "thirteenSolo": "Thirteen solo",
+    "spadeQueen": "Queen of Spades",
+    "oneOrFive": "One or five"
   }
 }
