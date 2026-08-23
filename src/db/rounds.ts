@@ -5,7 +5,7 @@ export async function addRound(gameId: string) {
         id: crypto.randomUUID(),
         gameId: gameId,
         number: -1,
-        type: "Test",
+        type: "rik",
         scores: {},
     })
 }

@@ -10,7 +10,7 @@ export default function PlayGamePage(): ReactElement {
     const { t } = useTranslation();
 
     const [currentGame, setCurrentGame] = useState<Game | undefined | null>(null);
-    const [selectRoundType, setSelectedRoundType] = useState<RoundType | null>(null);
+    const [selectedRoundType, setSelectedRoundType] = useState<RoundType | null>(null);
     const rounds: Round[] | undefined = useRounds(currentGame?.id);
 
     const onSelect = (event: ChangeEvent<HTMLSelectElement>) => {
@@ -96,6 +96,13 @@ export default function PlayGamePage(): ReactElement {
                             }
                         </select>
                     </span>
+                    {
+                        selectedRoundType === null ? <></> : (
+                            <div>
+                                {selectedRoundType}
+                            </div>
+                        )
+                    }
                 </div>
             </div>
         </main>
