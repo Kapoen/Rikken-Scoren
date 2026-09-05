@@ -78,3 +78,6 @@ export const ROUND_TYPES = {
 export type RoundType = keyof typeof ROUND_TYPES;
 export type RoundTypeConfig = typeof ROUND_TYPES[RoundType];
 export type RoundConfig<K extends RoundType> = (typeof ROUND_TYPES)[K];
+export type RoundTypeOfCategory<C extends RoundTypeConfig["category"]> = {
+    [K in RoundType]: RoundConfig<K>["category"] extends C ? K : never
+}[RoundType];

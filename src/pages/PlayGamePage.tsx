@@ -5,6 +5,7 @@ import {getCurrentGame} from "../db/games.ts";
 import {Navigate} from "react-router";
 import {useRounds} from "../hooks/useRounds.ts";
 import {ROUND_TYPES, type RoundType} from "../game/roundTypes.ts";
+import RoundSelect from "../components/RoundSelect.tsx";
 
 export default function PlayGamePage(): ReactElement {
     const { t } = useTranslation();
@@ -62,6 +63,30 @@ export default function PlayGamePage(): ReactElement {
                     </div>
                 </div>
 
+                <div className="flex flex-col w-full items-center justify-center">
+                    <span className="flex flex-row w-full gap-2 items-center justify-center">
+                        <b className="min-w-fit">{t("game.addRound")}</b>
+                        <select className="w-full border rounded-lg p-2" onChange={onSelect}>
+                            <option value="selectRoundType">{t("game.selectGametype")}</option>
+                            {
+                                (Object.keys(ROUND_TYPES) as RoundType[]).map((roundType) => (
+                                    <option key={roundType} value={roundType}>
+                                        {t(`roundTypes.${roundType}`)}
+                                    </option>
+                                ))
+                            }
+                        </select>
+                    </span>
+                    {
+                        selectedRoundType === null ? <></> : (
+                            <RoundSelect
+                                roundType={selectedRoundType}
+                                players={currentGame.players}
+                            />
+                        )
+                    }
+                </div>
+
                 {
                     rounds.length === 0 ? <></> : (
                         <div className="flex flex-col items-center justify-center w-full gap-2 p-2">
@@ -81,29 +106,6 @@ export default function PlayGamePage(): ReactElement {
                         </div>
                     )
                 }
-
-                <div className="flex flex-col w-full items-center justify-center">
-                    <span className="flex flex-row w-full gap-2 items-center justify-center">
-                        <b className="min-w-fit">{t("game.addRound")}</b>
-                        <select className="w-full border rounded-lg p-2" onChange={onSelect}>
-                            <option value="selectRoundType">{t("game.selectGametype")}</option>
-                            {
-                                (Object.keys(ROUND_TYPES) as RoundType[]).map((roundType) => (
-                                    <option key={roundType} value={roundType}>
-                                        {t(`roundTypes.${roundType}`)}
-                                    </option>
-                                ))
-                            }
-                        </select>
-                    </span>
-                    {
-                        selectedRoundType === null ? <></> : (
-                            <div>
-                                {selectedRoundType}
-                            </div>
-                        )
-                    }
-                </div>
             </div>
         </main>
     )
