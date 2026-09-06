@@ -5,13 +5,18 @@ import {getCurrentGame} from "../db/games.ts";
 import {Navigate} from "react-router";
 import {useRounds} from "../hooks/useRounds.ts";
 import {ROUND_TYPES, type RoundType} from "../game/roundTypes.ts";
-import RoundSelect from "../components/RoundSelect.tsx";
+import RoundSelect, {type SelectedPlayers} from "../components/RoundSelect.tsx";
 
 export default function PlayGamePage(): ReactElement {
     const { t } = useTranslation();
 
     const [currentGame, setCurrentGame] = useState<Game | undefined | null>(null);
     const [selectedRoundType, setSelectedRoundType] = useState<RoundType | null>(null);
+    const [selectedPlayers, setSelectedPlayers] = useState<SelectedPlayers>({
+        standard: [],
+        fixedScore: [],
+        spadeQueen: []
+    });
     const rounds: Round[] | undefined = useRounds(currentGame?.id);
 
     const onSelect = (event: ChangeEvent<HTMLSelectElement>) => {
@@ -79,10 +84,14 @@ export default function PlayGamePage(): ReactElement {
                     </span>
                     {
                         selectedRoundType === null ? <></> : (
-                            <RoundSelect
-                                roundType={selectedRoundType}
-                                players={currentGame.players}
-                            />
+                            <div>
+                                <RoundSelect
+                                    roundType={selectedRoundType}
+                                    players={currentGame.players}
+                                    selectedPlayers={selectedPlayers}
+                                    setSelectedPlayers={setSelectedPlayers}
+                                />
+                            </div>
                         )
                     }
                 </div>

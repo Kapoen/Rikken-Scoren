@@ -7,13 +7,14 @@ import {ROUND_TYPES, type RoundTypeOfCategory} from "../game/roundTypes.ts";
 type SoloRoundSelectProps = {
     players: Player[];
     roundType: RoundTypeOfCategory<"solo">;
+    selectedPlayers: SelectedPlayerStandard[];
+    setSelectedPlayers: (players: SelectedPlayerStandard[]) => void;
 }
 
 const MIN_TRICKS = 0;
 const MAX_TRICKS = 13;
 
-export default function SoloRoundSelect({ players, roundType }: SoloRoundSelectProps): ReactElement {
-    const [selectedPlayers, setSelectedPlayers] = useState<SelectedPlayerStandard[]>([]);
+export default function SoloRoundSelect({ players, roundType, selectedPlayers, setSelectedPlayers }: SoloRoundSelectProps): ReactElement {
     const [tricksWon, setTricksWon] = useState<number>(MIN_TRICKS);
 
     useEffect(() => {
@@ -25,18 +26,15 @@ export default function SoloRoundSelect({ players, roundType }: SoloRoundSelectP
         setTricksWon(Math.min(MAX_TRICKS, Math.max(MIN_TRICKS, tricksWon)));
 
     const handlePlayerSelect = (player: Player) => {
-        setSelectedPlayers(prev => {
-            const existingPlayer = prev.find(p => p.player.id === player.id);
+        const existingPlayer = selectedPlayers.find(p => p.player.id === player.id);
 
-            if (!existingPlayer) {
-                return [
-                    ...prev,
-                    { kind: "standard", player: player, type: "solo" }
-                ];
-            }
+        if (!existingPlayer) {
+            return setSelectedPlayers([
+                { kind: "standard", player: player, type: "solo" }
+            ]);
+        }
 
-            return prev.filter(p => p.player.id !== player.id);
-        });
+        return setSelectedPlayers(selectedPlayers.filter(p => p.player.id !== player.id));
     }
 
     return (

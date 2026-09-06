@@ -39,14 +39,15 @@ export default function PlayerSelect({ players, selectedPlayers, handlePlayerSel
                 return selected.state === "won" ? "bg-green-500" : "bg-red-500";
             }
             case "spadeQueen": {
-                const selected = selectedPlayers.find(p => p.player.id === player.id);
+                const selected = selectedPlayers.find(p => p.player.id === player.id && p.trick === trick);
                 if (!selected) {
                     return DEFAULT_PLAYER_BACKGROUND;
                 }
 
-                return selected.trick === trick ? "bg-blue-500" : DEFAULT_PLAYER_BACKGROUND;
+                return "bg-blue-500";
             }
-            default: return DEFAULT_PLAYER_BACKGROUND;
+            default:
+                return DEFAULT_PLAYER_BACKGROUND;
         }
 
     }

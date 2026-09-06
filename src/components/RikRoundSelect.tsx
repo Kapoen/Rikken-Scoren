@@ -10,10 +10,11 @@ const MAX_TRICKS = 13;
 type RikRoundSelectProps = {
     players: Player[];
     roundType: RoundTypeOfCategory<"rik" | "troela">;
+    selectedPlayers: SelectedPlayerStandard[];
+    setSelectedPlayers: (players: SelectedPlayerStandard[]) => void;
 }
 
-export default function RikRoundSelect({ players, roundType }: RikRoundSelectProps): ReactElement {
-    const [selectedPlayers, setSelectedPlayers] = useState<SelectedPlayerStandard[]>([]);
+export default function RikRoundSelect({ players, roundType, selectedPlayers, setSelectedPlayers }: RikRoundSelectProps): ReactElement {
     const [tricksWon, setTricksWon] = useState<number>(MIN_TRICKS);
 
     useEffect(() => {
@@ -22,25 +23,23 @@ export default function RikRoundSelect({ players, roundType }: RikRoundSelectPro
     }, []);
 
     const handlePlayerSelect = (player: Player, type: SelectedPlayerStandard["type"]) => {
-        setSelectedPlayers(prev => {
-            const existingPlayer = prev.find(p => p.player.id === player.id);
+        const existingPlayer = selectedPlayers.find(p => p.player.id === player.id);
 
-            if (!existingPlayer) {
-                return [
-                    ...prev.filter(p => p.type !== type),
-                    { kind: "standard", player: player, type: type }
-                ];
-            }
+        if (!existingPlayer) {
+            return setSelectedPlayers([
+                ...selectedPlayers.filter(p => p.type !== type),
+                { kind: "standard", player: player, type: type }
+            ]);
+        }
 
-            if (existingPlayer.type !== type) {
-                return [
-                    ...prev.filter(p => p.player.id !== player.id && p.type !== type),
-                    { kind: "standard", player: player, type: type }
-                ];
-            }
+        if (existingPlayer.type !== type) {
+            return setSelectedPlayers([
+                ...selectedPlayers.filter(p => p.player.id !== player.id && p.type !== type),
+                { kind: "standard", player: player, type: type }
+            ]);
+        }
 
-            return prev.filter(p => p.player.id !== player.id);
-        });
+        return setSelectedPlayers(selectedPlayers.filter(p => p.player.id !== player.id));
     }
 
     const handleTricksWon = (tricksWon: number) =>
