@@ -1,7 +1,7 @@
 import type {Player} from "../game/types.ts";
-import {type ChangeEvent, type ReactElement, useEffect, useState} from "react";
+import {type ChangeEvent, type Dispatch, type ReactElement, type SetStateAction, useEffect} from "react";
 import PlayerSelect from "./PlayerSelect.tsx";
-import type {SelectedPlayerStandard} from "./RoundSelect.tsx";
+import type {SelectedPlayerStandard} from "../game/selectedPlayerTypes.ts";
 import {ROUND_TYPES, type RoundTypeOfCategory} from "../game/roundTypes.ts";
 
 const MIN_TRICKS = 0;
@@ -12,14 +12,14 @@ type RikRoundSelectProps = {
     roundType: RoundTypeOfCategory<"rik" | "troela">;
     selectedPlayers: SelectedPlayerStandard[];
     setSelectedPlayers: (players: SelectedPlayerStandard[]) => void;
+    tricks: number | undefined;
+    setTricks: Dispatch<SetStateAction<number | undefined>>;
 }
 
-export default function RikRoundSelect({ players, roundType, selectedPlayers, setSelectedPlayers }: RikRoundSelectProps): ReactElement {
-    const [tricksWon, setTricksWon] = useState<number>(MIN_TRICKS);
-
+export default function RikRoundSelect({ players, roundType, selectedPlayers, setSelectedPlayers, tricks, setTricks }: RikRoundSelectProps): ReactElement {
     useEffect(() => {
         setSelectedPlayers([]);
-        setTricksWon(ROUND_TYPES[roundType].tricks);
+        setTricks(ROUND_TYPES[roundType].tricks);
     }, []);
 
     const handlePlayerSelect = (player: Player, type: SelectedPlayerStandard["type"]) => {
@@ -43,7 +43,7 @@ export default function RikRoundSelect({ players, roundType, selectedPlayers, se
     }
 
     const handleTricksWon = (tricksWon: number) =>
-        setTricksWon(Math.min(MAX_TRICKS, Math.max(MIN_TRICKS, tricksWon)));
+        setTricks(Math.min(MAX_TRICKS, Math.max(MIN_TRICKS, tricksWon)));
 
     return (
         <div>
@@ -64,7 +64,7 @@ export default function RikRoundSelect({ players, roundType, selectedPlayers, se
                 type={"mate"}
             />
             SLAGEN
-            <input type={"number"} min={0} max={13} value={tricksWon}
+            <input type={"number"} min={0} max={13} value={tricks}
                    onChange={(event: ChangeEvent<HTMLInputElement>) =>
                        handleTricksWon(parseInt(event.target.value))
                    }

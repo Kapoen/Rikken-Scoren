@@ -4,7 +4,7 @@ import type {
     SelectedPlayerFixedScore,
     SelectedPlayerSpadeQueen,
     SelectedPlayerStandard
-} from "./RoundSelect.tsx";
+} from "../game/selectedPlayerTypes.ts";
 
 type PlayerSelectCommonProps = {
     players: Player[];

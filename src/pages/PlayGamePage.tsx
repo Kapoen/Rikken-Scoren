@@ -1,11 +1,13 @@
 import {type ChangeEvent, type ReactElement, useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import type {Game, Player, Round} from "../game/types.ts";
-import {getCurrentGame} from "../db/games.ts";
+import {getCurrentGame, getPlayerScores} from "../db/games.ts";
 import {Navigate} from "react-router";
 import {useRounds} from "../hooks/useRounds.ts";
 import {ROUND_TYPES, type RoundType} from "../game/roundTypes.ts";
-import RoundSelect, {type SelectedPlayers} from "../components/RoundSelect.tsx";
+import {calculateScore} from "../game/calculateScore.ts";
+import type {SelectedPlayers} from "../game/selectedPlayerTypes.ts";
+import RoundSelect from "../components/RoundSelect.tsx";
 
 export default function PlayGamePage(): ReactElement {
     const { t } = useTranslation();
@@ -17,6 +19,8 @@ export default function PlayGamePage(): ReactElement {
         fixedScore: [],
         spadeQueen: []
     });
+    const [tricks, setTricks] = useState<number | undefined>();
+    const [scores, setScores] = useState<Record<string, number>>();
     const rounds: Round[] | undefined = useRounds(currentGame?.id);
 
     const onSelect = (event: ChangeEvent<HTMLSelectElement>) => {
@@ -43,6 +47,19 @@ export default function PlayGamePage(): ReactElement {
         void fetchCurrentGame();
     }, []);
 
+    useEffect(() => {
+        async function fetchScores() {
+            if (!currentGame) {
+                return;
+            }
+
+            const playerScores: Record<string, number> = await getPlayerScores(currentGame.id);
+            setScores(playerScores);
+        }
+
+        void fetchScores();
+    }, [rounds.length]);
+
     if (currentGame === null) {
         return <div>Loading...</div>;
     }
@@ -61,7 +78,7 @@ export default function PlayGamePage(): ReactElement {
                         currentGame.players.map((player: Player) => (
                             <div key={player.id} className="flex flex-col items-center justify-center border rounded-lg w-1/5 min-w-48 min-h-36">
                                 <span className="w-full text-center h-1/4">{player.name}</span>
-                                <span className="w-full text-center text-6xl font-bold h-3/4">{rounds.length === 0 ? 0 : rounds.at(-1)!.scores[player.id]}</span>
+                                <span className="w-full text-center text-6xl font-bold h-3/4">{scores ? scores[player.id] : 0}</span>
                             </div>
                         ))
                     }
@@ -90,7 +107,15 @@ export default function PlayGamePage(): ReactElement {
                                     players={currentGame.players}
                                     selectedPlayers={selectedPlayers}
                                     setSelectedPlayers={setSelectedPlayers}
+                                    tricks={tricks}
+                                    setTricks={setTricks}
                                 />
+                                <button
+                                    className="border rounded-lg bg-blue-400 w-full p-2"
+                                    onClick={() => calculateScore(selectedPlayers, selectedRoundType, tricks)}
+                                >
+                                    SUBMIT
+                                </button>
                             </div>
                         )
                     }
@@ -106,7 +131,7 @@ export default function PlayGamePage(): ReactElement {
                             <div className="border rounded-lg w-full">
                                 {
                                     rounds.map((round: Round) => (
-                                        <div>
+                                        <div key={round.id}>
                                             {round.type}
                                         </div>
                                     ))

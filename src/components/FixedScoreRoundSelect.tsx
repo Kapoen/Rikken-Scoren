@@ -1,15 +1,16 @@
 import {type ReactElement, useEffect} from "react";
 import type {Player} from "../game/types.ts";
 import PlayerSelect from "./PlayerSelect.tsx";
-import type {SelectedPlayerFixedScore} from "./RoundSelect.tsx";
+import type {SelectedPlayerFixedScore} from "../game/selectedPlayerTypes.ts";
 
 type FixedScoredRoundSelectProps = {
     players: Player[];
     selectedPlayers: SelectedPlayerFixedScore[];
     setSelectedPlayers: (players: SelectedPlayerFixedScore[]) => void;
+    isOneOrFive?: boolean
 }
 
-export default function FixedScoreRoundSelect({ players, selectedPlayers, setSelectedPlayers }: FixedScoredRoundSelectProps): ReactElement {
+export default function FixedScoreRoundSelect({ players, selectedPlayers, setSelectedPlayers, isOneOrFive }: FixedScoredRoundSelectProps): ReactElement {
     useEffect(() => {
         setSelectedPlayers([]);
     }, []);
@@ -25,6 +26,10 @@ export default function FixedScoreRoundSelect({ players, selectedPlayers, setSel
         }
 
         if (existingPlayer.state === "won") {
+            if (isOneOrFive) {
+                return setSelectedPlayers(selectedPlayers.filter(p => p.player.id !== player.id));
+            }
+
             return setSelectedPlayers([
                 ...selectedPlayers.filter(p => p.player.id !== player.id),
                 { kind: "fixedScore", player: player, state: "lost" }

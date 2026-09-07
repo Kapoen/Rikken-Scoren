@@ -1,5 +1,5 @@
 import {db} from "./database.ts";
-import type {Game, Player} from "../game/types.ts";
+import type {Game, Player, Round} from "../game/types.ts";
 
 export async function createGame(players: string[]) {
     if (players.length !== 4) {
@@ -28,4 +28,27 @@ export async function createGame(players: string[]) {
 
 export async function getCurrentGame(): Promise<Game | undefined> {
     return db.games.filter(game => !game.finished).first();
+}
+
+export async function getPlayerScores(gameId: string): Promise<Record<string, number>> {
+    const game: Game | undefined = await db.games.filter(game => game.id === gameId).first();
+    if (!game) {
+        throw new Error("Game is not found.")
+    }
+
+    const rounds: Round[] = await db.rounds.filter(round => round.gameId === gameId).toArray();
+
+    const scores: Record<string, number> = {};
+    game.players.forEach(p => {
+        scores[p.id] = 0;
+    });
+
+    rounds.forEach(round => {
+        const roundScores = round.scores;
+        game.players.forEach(p => {
+            scores[p.id] += roundScores[p.id];
+        });
+    });
+
+    return scores;
 }

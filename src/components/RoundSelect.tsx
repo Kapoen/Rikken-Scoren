@@ -5,40 +5,18 @@ import RikRoundSelect from "./RikRoundSelect.tsx";
 import SoloRoundSelect from "./SoloRoundSelect.tsx";
 import FixedScoreRoundSelect from "./FixedScoreRoundSelect.tsx";
 import SpadeQueenRoundSelect from "./SpadeQueenRoundSelect.tsx";
-
+import type {SelectedPlayers} from "../game/selectedPlayerTypes.ts";
 
 type RoundSelectProps = {
     roundType: RoundType;
     players: Player[];
     selectedPlayers: SelectedPlayers;
     setSelectedPlayers: Dispatch<SetStateAction<SelectedPlayers>>;
+    tricks: number | undefined;
+    setTricks: Dispatch<SetStateAction<number | undefined>>;
 };
 
-export type SelectedPlayerStandard = {
-    kind: "standard";
-    player: Player;
-    type: "initiator" | "mate" | "solo";
-}
-
-export type SelectedPlayerFixedScore = {
-    kind: "fixedScore";
-    player: Player;
-    state: "won" | "lost";
-};
-
-export type SelectedPlayerSpadeQueen = {
-    kind: "spadeQueen";
-    player: Player;
-    trick: "spadeQueen" | "last";
-}
-
-export type SelectedPlayers = {
-    standard: SelectedPlayerStandard[];
-    fixedScore: SelectedPlayerFixedScore[];
-    spadeQueen: SelectedPlayerSpadeQueen[];
-}
-
-export default function RoundSelect({ roundType, players, selectedPlayers, setSelectedPlayers }: RoundSelectProps): ReactElement {
+export default function RoundSelect({ roundType, players, selectedPlayers, setSelectedPlayers, tricks, setTricks }: RoundSelectProps): ReactElement {
     const category = ROUND_TYPES[roundType].category;
 
     switch (category) {
@@ -49,12 +27,13 @@ export default function RoundSelect({ roundType, players, selectedPlayers, setSe
                 roundType={roundType as RoundTypeOfCategory<"troela" | "rik">}
                 selectedPlayers={selectedPlayers.standard}
                 setSelectedPlayers={players => {
-                    console.log(players)
                     setSelectedPlayers(prev => ({
                         ...prev,
                         standard: players
                     }));
                 }}
+                tricks={tricks}
+                setTricks={setTricks}
             />;
         case "solo":
             return <SoloRoundSelect
@@ -67,6 +46,8 @@ export default function RoundSelect({ roundType, players, selectedPlayers, setSe
                         standard: players
                     }));
                 }}
+                tricks={tricks}
+                setTricks={setTricks}
             />;
         case "fixedScore":
             return <FixedScoreRoundSelect
@@ -78,6 +59,7 @@ export default function RoundSelect({ roundType, players, selectedPlayers, setSe
                         fixedScore: players
                     }));
                 }}
+                isOneOrFive={roundType === "oneOrFive"}
             />;
         case "spadeQueen":
             return <SpadeQueenRoundSelect
