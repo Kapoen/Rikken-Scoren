@@ -10,7 +10,7 @@ type SoloRoundSelectProps = {
     roundType: RoundTypeOfCategory<"solo">;
     selectedPlayers: SelectedPlayerStandard[];
     setSelectedPlayers: (players: SelectedPlayerStandard[]) => void;
-    tricks: number | undefined;
+    tricks: number;
     setTricks: Dispatch<SetStateAction<number | undefined>>;
 }
 
@@ -41,7 +41,7 @@ export default function SoloRoundSelect({ players, roundType, selectedPlayers, s
     }
 
     return (
-        <div>
+        <div className="w-full flex flex-col gap-2 mt-2 mb-2">
             <PlayerSelect
                 kind={"standard"}
                 players={players}
@@ -49,12 +49,17 @@ export default function SoloRoundSelect({ players, roundType, selectedPlayers, s
                 handlePlayerSelect={(player: Player) => handlePlayerSelect(player)}
                 type={"solo"}
             />
-            {t("game.tricks")}
-            <input type={"number"} min={0} max={13} value={tricks}
-                   onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                       handleTricksWon(parseInt(event.target.value))
-                   }
-            />
+            <span className="w-full flex flex-row items-center justify-center gap-2">
+                {t("game.tricks")}
+                <input type={"text"} inputMode={"numeric"} min={MIN_TRICKS} max={MAX_TRICKS} value={tricks}
+                       className="w-full border rounded-lg p-2"
+                       onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                           handleTricksWon(parseInt(event.target.value))
+                       }
+                />
+                <button className="w-10 h-10 border rounded-lg" onClick={() => handleTricksWon(tricks + 1)}>+</button>
+                <button className="w-10 h-10 border rounded-lg" onClick={() => handleTricksWon(tricks - 1)}>-</button>
+            </span>
         </div>
     );
 }

@@ -32,7 +32,7 @@ export default function RoundSelect({ roundType, players, selectedPlayers, setSe
                         standard: players
                     }));
                 }}
-                tricks={tricks}
+                tricks={tricks ? tricks : 0}
                 setTricks={setTricks}
             />;
         case "solo":
@@ -46,7 +46,7 @@ export default function RoundSelect({ roundType, players, selectedPlayers, setSe
                         standard: players
                     }));
                 }}
-                tricks={tricks}
+                tricks={tricks ? tricks : 0}
                 setTricks={setTricks}
             />;
         case "fixedScore":
