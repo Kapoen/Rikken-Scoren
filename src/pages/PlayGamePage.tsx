@@ -49,19 +49,23 @@ export default function PlayGamePage(): ReactElement {
 
     useEffect(() => {
         async function fetchScores() {
-            if (!currentGame) {
-                return;
-            }
+            try {
+                if (!currentGame) {
+                    return;
+                }
 
-            const playerScores: Record<string, number> = await getPlayerScores(currentGame.id);
-            setScores(playerScores);
+                const playerScores: Record<string, number> = await getPlayerScores(currentGame.id);
+                setScores(playerScores);
+            } catch (err) {
+                console.error(err);
+            }
         }
 
         void fetchScores();
     }, [rounds.length]);
 
     if (currentGame === null) {
-        return <div>Loading...</div>;
+        return <div>{t("game.loading")}</div>;
     }
 
     if (currentGame === undefined) {
@@ -114,7 +118,7 @@ export default function PlayGamePage(): ReactElement {
                                     className="border rounded-lg bg-blue-400 w-full p-2"
                                     onClick={() => calculateScore(selectedPlayers, selectedRoundType, tricks)}
                                 >
-                                    SUBMIT
+                                    {t("game.submit")}
                                 </button>
                             </div>
                         )

@@ -13,7 +13,14 @@
     "rounds": "Rounds",
     "showGraph": "Show graph",
     "addRound": "Add round",
-    "selectGametype": "Select gametype"
+    "selectGametype": "Select gametype",
+    "loading": "Loading...",
+    "submit": "Submit",
+    "rikker": "Rikker",
+    "mate": "Mate",
+    "tricks": "Tricks",
+    "spadeQueen": "Queen of Spades",
+    "lastTrick": "Last trick"
   },
   "roundTypes": {
     "troela": "Troela",

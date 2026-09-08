@@ -2,6 +2,7 @@ import type {Player} from "../game/types.ts";
 import {type ReactElement, useEffect} from "react";
 import PlayerSelect from "./PlayerSelect.tsx";
 import type {SelectedPlayerSpadeQueen} from "../game/selectedPlayerTypes.ts";
+import {useTranslation} from "react-i18next";
 
 type SpadeQueenRoundSelectType = {
     players: Player[];
@@ -10,6 +11,8 @@ type SpadeQueenRoundSelectType = {
 }
 
 export default function SpadeQueenRoundSelect({ players, selectedPlayers, setSelectedPlayers }: SpadeQueenRoundSelectType): ReactElement {
+    const { t } = useTranslation();
+
     useEffect(() => {
         setSelectedPlayers([]);
     }, []);
@@ -29,7 +32,7 @@ export default function SpadeQueenRoundSelect({ players, selectedPlayers, setSel
 
     return (
         <div>
-            Schoppen mie
+            {t("game.spadeQueen")}
             <PlayerSelect
                 kind={"spadeQueen"}
                 players={players}
@@ -37,7 +40,7 @@ export default function SpadeQueenRoundSelect({ players, selectedPlayers, setSel
                 handlePlayerSelect={(player: Player) => handlePlayerSelect(player, "spadeQueen")}
                 trick={"spadeQueen"}
             />
-            Laatste slag
+            {t("game.lastTrick")}
             <PlayerSelect
                 kind={"spadeQueen"}
                 players={players}

@@ -13,7 +13,14 @@
     "rounds": "Rondes",
     "showGraph": "Toon grafiek",
     "addRound": "Ronde toevoegen",
-    "selectGametype": "Kies speltype"
+    "selectGametype": "Kies speltype",
+    "loading": "Laden...",
+    "submit": "Bevestig",
+    "rikker": "Rikker",
+    "mate": "Maat",
+    "tricks": "Slagen",
+    "spadeQueen": "Schoppen mie",
+    "lastTrick": "Laatste slag"
   },
   "roundTypes": {
     "troela": "Troela",

@@ -3,6 +3,7 @@ import PlayerSelect from "./PlayerSelect.tsx";
 import type {Player} from "../game/types.ts";
 import type {SelectedPlayerStandard} from "../game/selectedPlayerTypes.ts";
 import {ROUND_TYPES, type RoundTypeOfCategory} from "../game/roundTypes.ts";
+import {useTranslation} from "react-i18next";
 
 type SoloRoundSelectProps = {
     players: Player[];
@@ -17,6 +18,8 @@ const MIN_TRICKS = 0;
 const MAX_TRICKS = 13;
 
 export default function SoloRoundSelect({ players, roundType, selectedPlayers, setSelectedPlayers, tricks, setTricks }: SoloRoundSelectProps): ReactElement {
+    const { t } = useTranslation();
+
     useEffect(() => {
         setSelectedPlayers([]);
         setTricks(ROUND_TYPES[roundType].tricks);
@@ -39,7 +42,6 @@ export default function SoloRoundSelect({ players, roundType, selectedPlayers, s
 
     return (
         <div>
-            Solo
             <PlayerSelect
                 kind={"standard"}
                 players={players}
@@ -47,7 +49,7 @@ export default function SoloRoundSelect({ players, roundType, selectedPlayers, s
                 handlePlayerSelect={(player: Player) => handlePlayerSelect(player)}
                 type={"solo"}
             />
-            SLAGEN
+            {t("game.tricks")}
             <input type={"number"} min={0} max={13} value={tricks}
                    onChange={(event: ChangeEvent<HTMLInputElement>) =>
                        handleTricksWon(parseInt(event.target.value))

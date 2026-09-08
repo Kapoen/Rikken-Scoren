@@ -3,6 +3,7 @@ import {type ChangeEvent, type Dispatch, type ReactElement, type SetStateAction,
 import PlayerSelect from "./PlayerSelect.tsx";
 import type {SelectedPlayerStandard} from "../game/selectedPlayerTypes.ts";
 import {ROUND_TYPES, type RoundTypeOfCategory} from "../game/roundTypes.ts";
+import {useTranslation} from "react-i18next";
 
 const MIN_TRICKS = 0;
 const MAX_TRICKS = 13;
@@ -17,6 +18,8 @@ type RikRoundSelectProps = {
 }
 
 export default function RikRoundSelect({ players, roundType, selectedPlayers, setSelectedPlayers, tricks, setTricks }: RikRoundSelectProps): ReactElement {
+    const { t } = useTranslation();
+
     useEffect(() => {
         setSelectedPlayers([]);
         setTricks(ROUND_TYPES[roundType].tricks);
@@ -47,7 +50,7 @@ export default function RikRoundSelect({ players, roundType, selectedPlayers, se
 
     return (
         <div>
-            RIKKER
+            {t("game.rikker")}
             <PlayerSelect
                 kind={"standard"}
                 players={players}
@@ -55,7 +58,7 @@ export default function RikRoundSelect({ players, roundType, selectedPlayers, se
                 handlePlayerSelect={(player: Player) => handlePlayerSelect(player, "initiator")}
                 type={"initiator"}
             />
-            MAAT
+            {t("game.mate")}
             <PlayerSelect
                 kind={"standard"}
                 players={players}
@@ -63,7 +66,7 @@ export default function RikRoundSelect({ players, roundType, selectedPlayers, se
                 handlePlayerSelect={(player: Player) => handlePlayerSelect(player, "mate")}
                 type={"mate"}
             />
-            SLAGEN
+            {t("game.tricks")}
             <input type={"number"} min={0} max={13} value={tricks}
                    onChange={(event: ChangeEvent<HTMLInputElement>) =>
                        handleTricksWon(parseInt(event.target.value))
