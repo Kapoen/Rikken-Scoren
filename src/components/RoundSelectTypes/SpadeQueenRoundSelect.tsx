@@ -1,7 +1,7 @@
-import type {Player} from "../game/types.ts";
+import type {Player} from "../../game/types.ts";
 import {type ReactElement, useEffect} from "react";
-import PlayerSelect from "./PlayerSelect.tsx";
-import type {SelectedPlayerSpadeQueen} from "../game/selectedPlayerTypes.ts";
+import PlayerSelect from "../PlayerSelect.tsx";
+import type {SelectedPlayerSpadeQueen} from "../../game/selectedPlayerTypes.ts";
 import {useTranslation} from "react-i18next";
 
 type SpadeQueenRoundSelectType = {

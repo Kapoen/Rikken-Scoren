@@ -1,10 +1,10 @@
 import {type Dispatch, type ReactElement, type SetStateAction} from "react";
 import {ROUND_TYPES, type RoundType, type RoundTypeOfCategory} from "../game/roundTypes.ts";
 import type {Player} from "../game/types.ts";
-import RikRoundSelect from "./RikRoundSelect.tsx";
-import SoloRoundSelect from "./SoloRoundSelect.tsx";
-import FixedScoreRoundSelect from "./FixedScoreRoundSelect.tsx";
-import SpadeQueenRoundSelect from "./SpadeQueenRoundSelect.tsx";
+import RikRoundSelect from "./RoundSelectTypes/RikRoundSelect.tsx";
+import SoloRoundSelect from "./RoundSelectTypes/SoloRoundSelect.tsx";
+import FixedScoreRoundSelect from "./RoundSelectTypes/FixedScoreRoundSelect.tsx";
+import SpadeQueenRoundSelect from "./RoundSelectTypes/SpadeQueenRoundSelect.tsx";
 import type {SelectedPlayers} from "../game/selectedPlayerTypes.ts";
 
 type RoundSelectProps = {

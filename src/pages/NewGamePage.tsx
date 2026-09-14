@@ -26,7 +26,7 @@ export default function NewGamePage(): ReactElement {
             return;
         }
 
-        navigate("/playGame");
+        await navigate("/playGame");
     }
 
     return (

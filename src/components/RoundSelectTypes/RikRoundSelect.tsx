@@ -1,9 +1,10 @@
-import type {Player} from "../game/types.ts";
-import {type ChangeEvent, type Dispatch, type ReactElement, type SetStateAction, useEffect} from "react";
-import PlayerSelect from "./PlayerSelect.tsx";
-import type {SelectedPlayerStandard} from "../game/selectedPlayerTypes.ts";
-import {ROUND_TYPES, type RoundTypeOfCategory} from "../game/roundTypes.ts";
+import type {Player} from "../../game/types.ts";
+import {type Dispatch, type ReactElement, type SetStateAction, useEffect} from "react";
+import PlayerSelect from "../PlayerSelect.tsx";
+import type {SelectedPlayerStandard} from "../../game/selectedPlayerTypes.ts";
+import {ROUND_TYPES, type RoundTypeOfCategory} from "../../game/roundTypes.ts";
 import {useTranslation} from "react-i18next";
+import TrickSelect from "../TrickSelect.tsx";
 
 const MIN_TRICKS = 0;
 const MAX_TRICKS = 13;
@@ -45,9 +46,6 @@ export default function RikRoundSelect({ players, roundType, selectedPlayers, se
         return setSelectedPlayers(selectedPlayers.filter(p => p.player.id !== player.id));
     }
 
-    const handleTricksWon = (tricksWon: number) =>
-        setTricks(Math.min(MAX_TRICKS, Math.max(MIN_TRICKS, tricksWon)));
-
     return (
         <div className="w-full flex flex-col gap-2 mt-2 mb-2">
             <div>
@@ -70,17 +68,12 @@ export default function RikRoundSelect({ players, roundType, selectedPlayers, se
                     type={"mate"}
                 />
             </div>
-            <span className="w-full flex flex-row items-center justify-center gap-2">
-                {t("game.tricks")}
-                <input type={"text"} inputMode={"numeric"} min={MIN_TRICKS} max={MAX_TRICKS} value={tricks}
-                       className="w-full border rounded-lg p-2"
-                       onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                           handleTricksWon(parseInt(event.target.value))
-                       }
-                />
-                <button className="w-10 h-10 border rounded-lg" onClick={() => handleTricksWon(tricks + 1)}>+</button>
-                <button className="w-10 h-10 border rounded-lg" onClick={() => handleTricksWon(tricks - 1)}>-</button>
-            </span>
+            <TrickSelect
+                minTricks={MIN_TRICKS}
+                maxTricks={MAX_TRICKS}
+                tricks={tricks}
+                setTricks={setTricks}
+            />
         </div>
     );
 }

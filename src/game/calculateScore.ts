@@ -10,6 +10,13 @@ import type {Player} from "./types.ts";
 import {addRound} from "../db/rounds.ts";
 
 export async function calculateScore(selectedPlayers: SelectedPlayers, roundType: RoundType, tricks?: number): Promise<void> {
+    if (selectedPlayers.standard.length === 0
+        && selectedPlayers.fixedScore.length === 0
+        && selectedPlayers.spadeQueen.length === 0
+    ) {
+        throw new Error("Players need to be selected");
+    }
+
     const category = ROUND_TYPES[roundType].category;
 
     const game = await getCurrentGame();
@@ -64,6 +71,33 @@ async function calculateStandardScore(
     roundType: RoundTypeOfCategory<"troela" | "rik" | "solo">,
     tricks: number
 ) {
+    if (ROUND_TYPES[roundType].category === "troela" || ROUND_TYPES[roundType].category === "rik") {
+        const initiatorSelected = selectedPlayers.some(p => p.type === "initiator");
+        if (!initiatorSelected) {
+            throw new Error("Initiator needs to be selected");
+        }
+
+        const mateSelected = selectedPlayers.some(p => p.type === "mate");
+        if (!mateSelected) {
+            throw new Error("Mate needs to be selected");
+        }
+
+        if (selectedPlayers.length !== 2) {
+            throw new Error("Only two players may be selected");
+        }
+    }
+
+    if (ROUND_TYPES[roundType].category === "solo") {
+        const soloSelected = selectedPlayers.some(p => p.type === "solo");
+        if (!soloSelected) {
+            throw new Error("Solo player needs to be selected.");
+        }
+
+        if (selectedPlayers.length !== 2) {
+            throw new Error("Only one player may be selected");
+        }
+    }
+
     let points = tricks >= ROUND_TYPES[roundType].tricks
         ? (tricks - ROUND_TYPES[roundType].tricks) * POINTS_EXTRA_TRICK + ROUND_TYPES[roundType].basePoints
         : (tricks - (ROUND_TYPES[roundType].tricks - 1)) * POINTS_EXTRA_TRICK - ROUND_TYPES[roundType].basePoints;
@@ -140,6 +174,20 @@ async function calculateSpadeQueenScore(
     selectedPlayers: SelectedPlayerSpadeQueen[],
     roundType: RoundTypeOfCategory<"spadeQueen">,
 ) {
+    const spadeQueenSelected = selectedPlayers.some(p => p.trick === "spadeQueen");
+    if (!spadeQueenSelected) {
+        throw new Error("Spade queen trick winner needs to be selected");
+    }
+
+    const lastTrickSelected = selectedPlayers.some(p => p.trick === "last");
+    if (!lastTrickSelected) {
+        throw new Error("Last trick winner needs to be selected");
+    }
+
+    if (selectedPlayers.length !== 2) {
+        throw new Error("Only two players may be selected");
+    }
+
     const points = ROUND_TYPES[roundType].points;
 
     const scores: Record<string, number> = {};

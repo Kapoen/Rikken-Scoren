@@ -1,7 +1,7 @@
 import {type ReactElement, useEffect} from "react";
-import type {Player} from "../game/types.ts";
-import PlayerSelect from "./PlayerSelect.tsx";
-import type {SelectedPlayerFixedScore} from "../game/selectedPlayerTypes.ts";
+import type {Player} from "../../game/types.ts";
+import PlayerSelect from "../PlayerSelect.tsx";
+import type {SelectedPlayerFixedScore} from "../../game/selectedPlayerTypes.ts";
 
 type FixedScoredRoundSelectProps = {
     players: Player[];

@@ -44,7 +44,7 @@ export default function PlayerSelect({ players, selectedPlayers, handlePlayerSel
                     return DEFAULT_PLAYER_BACKGROUND;
                 }
 
-                return "bg-blue-500";
+                return "bg-red-500";
             }
             default:
                 return DEFAULT_PLAYER_BACKGROUND;
