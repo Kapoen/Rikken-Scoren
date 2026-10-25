@@ -92,7 +92,7 @@ export default function PlayGamePage(): ReactElement {
                 <div className="flex flex-col w-full items-center justify-center">
                     <span className="flex flex-row w-full gap-2 items-center justify-center">
                         <b className="min-w-fit">{t("game.addRound")}</b>
-                        <select className="w-full border rounded-lg p-2" onChange={onSelect}>
+                        <select className="w-full border rounded-lg p-2" onChange={onSelect} value={selectedRoundType === null ? "selectRoundType" : selectedRoundType}>
                             <option value="selectRoundType">{t("game.selectGametype")}</option>
                             {
                                 (Object.keys(ROUND_TYPES) as RoundType[]).map((roundType) => (
