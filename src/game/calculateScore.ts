@@ -93,7 +93,7 @@ async function calculateStandardScore(
             throw new Error("Solo player needs to be selected.");
         }
 
-        if (selectedPlayers.length !== 2) {
+        if (selectedPlayers.length !== 1) {
             throw new Error("Only one player may be selected");
         }
     }

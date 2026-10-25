@@ -15,5 +15,5 @@ export async function addRound(gameId: string, type: RoundType, scores: Record<s
 async function getRoundNumber(gameId: string): Promise<number> {
     const rounds: Round[] = await db.rounds.filter(round => round.gameId === gameId).toArray();
 
-    return rounds.length + 1;
+    return Math.max(...rounds.map(round => round.number), 0) + 1;
 }

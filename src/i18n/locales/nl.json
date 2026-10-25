@@ -11,6 +11,7 @@
   },
   "game": {
     "rounds": "Rondes",
+    "round": "Ronde",
     "showGraph": "Toon grafiek",
     "addRound": "Ronde toevoegen",
     "selectGametype": "Kies speltype",

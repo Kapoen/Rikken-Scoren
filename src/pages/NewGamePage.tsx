@@ -40,7 +40,7 @@ export default function NewGamePage(): ReactElement {
                         type="text"
                         value={name}
                         onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(index, e.target.value)}
-                        placeholder={`${t("menu.player")} ${index}`}
+                        placeholder={`${t("menu.player")} ${index + 1}`}
                     />
                 ))}
                 <button

@@ -132,11 +132,24 @@ export default function PlayGamePage(): ReactElement {
                                <p className="min-w-fit">{t("game.rounds")} ({rounds.length})</p>
                                <button className="w-full border rounded-lg bg-blue-400">{t("game.showGraph")}</button>
                            </span>
-                            <div className="border rounded-lg w-full">
+                            <div className="border w-full rounded-lg bg-clip-border">
                                 {
-                                    rounds.map((round: Round) => (
-                                        <div key={round.id}>
-                                            {round.type}
+                                    rounds.map((round: Round, index: number) => (
+                                        <div key={round.id}
+                                             className={`p-2
+                                                ${index % 2 === 0 ? "bg-gray-400" : "bg-gray-300"} 
+                                                ${index === 0 ? "rounded-t-lg" : ""} 
+                                                ${index === rounds.length - 1 ? "rounded-b-lg" : ""}
+                                            `}
+                                        >
+                                            <b>{t("game.round") + ` ${round.number}: ${t(`roundTypes.${round.type}`)}`}</b>
+                                            <div className="flex flex-row items-center gap-2">
+                                                {Object.keys(round.scores).map(playerId => (
+                                                    <div key={round.id + "-" + playerId}>
+                                                        {currentGame.players.find(p => p.id === playerId)!.name + ": " + round.scores[playerId]}
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
                                     ))
                                 }

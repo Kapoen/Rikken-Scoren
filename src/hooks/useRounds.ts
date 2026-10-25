@@ -3,5 +3,5 @@ import {useLiveQuery} from "dexie-react-hooks";
 import {db} from "../db/database.ts";
 
 export function useRounds(gameId: string | undefined): Round[] {
-    return useLiveQuery(() => gameId === undefined ? [] :  db.rounds.where("gameId").equals(gameId).toArray(), [gameId], []);
+    return useLiveQuery(() => gameId === undefined ? [] :  db.rounds.where("gameId").equals(gameId).reverse().sortBy("number"), [gameId], []);
 }

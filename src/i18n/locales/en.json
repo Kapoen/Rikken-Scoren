@@ -11,6 +11,7 @@
   },
   "game": {
     "rounds": "Rounds",
+    "round": "Round",
     "showGraph": "Show graph",
     "addRound": "Add round",
     "selectGametype": "Select gametype",
