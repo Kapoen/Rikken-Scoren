@@ -116,7 +116,10 @@ export default function PlayGamePage(): ReactElement {
                                 />
                                 <button
                                     className="border rounded-lg bg-blue-400 w-full p-2"
-                                    onClick={() => calculateScore(selectedPlayers, selectedRoundType, tricks)}
+                                    onClick={async () => {
+                                        await calculateScore(selectedPlayers, selectedRoundType, tricks)
+                                        setSelectedRoundType(null);
+                                    }}
                                 >
                                     {t("game.submit")}
                                 </button>
